@@ -2,7 +2,7 @@
 // src/components/LeadForm.astro
 // PUBLIC_TURNSTILE_SITE_KEY: configurar variável de ambiente no Cloudflare Pages
 // SUPABASE_URL: URL da Edge Function do Supabase rfaskndtdixdhpdwrydy
-const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA";
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "CONFIGURE_NO_CLOUDFLARE";
 const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submit-prepcenter-lead";
 ---
 <div id="lead-form-wrapper" class="bg-white rounded-2xl border border-[var(--color-border)] shadow-lg p-8">
@@ -190,6 +190,7 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
           volume,
           marketplace,
           turnstile_token: turnstileToken,
+          lgpd_consent: true,
           ...getUTMs(),
         }),
       });
