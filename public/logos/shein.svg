@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 56" fill="none">
-  <rect width="160" height="56" rx="8" fill="#111111"/>
-  <text x="80" y="38" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif" font-size="26" font-weight="900" letter-spacing="3" fill="white">SHEIN</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 64">
+  <rect width="80" height="64" rx="12" fill="#111111"/>
+  <text x="40" y="42" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="28" font-weight="900" letter-spacing="2" fill="white">SHEIN</text>
 </svg>

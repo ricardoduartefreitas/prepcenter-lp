@@ -1,30 +1,36 @@
 ---
 // src/components/Marketplaces.astro
 const marketplaces = [
-  { nome: "TikTok Shop", logo: "/logos/tiktok-shop.svg" },
-  { nome: "Shopee",      logo: "/logos/shopee.svg" },
-  { nome: "Shein",       logo: "/logos/shein.svg" },
-  { nome: "AliExpress",  logo: "/logos/aliexpress.svg" },
-  { nome: "Kwai",        logo: "/logos/kwai.svg" },
-  { nome: "Temu",        logo: "/logos/temu.svg" },
+  { nome: "TikTok Shop", logo: "/logos/tiktok-shop.svg", w: 64, h: 64 },
+  { nome: "Shopee",      logo: "/logos/shopee.svg",      w: 64, h: 64 },
+  { nome: "Shein",       logo: "/logos/shein.svg",       w: 80, h: 64 },
+  { nome: "AliExpress",  logo: "/logos/aliexpress.svg",  w: 64, h: 64 },
+  { nome: "Kwai",        logo: "/logos/kwai.svg",        w: 64, h: 64 },
+  { nome: "Temu",        logo: "/logos/temu.svg",        w: 80, h: 64 },
 ];
 ---
-<section class="py-12 bg-[var(--color-bg)] border-y border-[var(--color-border)]">
+<section class="py-10 bg-[var(--color-bg)] border-y border-[var(--color-border)]">
   <div class="max-w-5xl mx-auto px-4 text-center">
-    <p class="text-sm font-medium text-[var(--color-text-muted)] uppercase tracking-widest mb-8">
+    <p class="text-sm font-medium text-[var(--color-text-muted)] uppercase tracking-widest mb-7">
       Atendemos todos os principais marketplaces
     </p>
-    <div class="flex flex-wrap justify-center gap-4">
+    <!-- Linha única: scroll horizontal no mobile, centralizado no desktop -->
+    <div class="flex items-center justify-center gap-4 overflow-x-auto pb-2 scrollbar-none">
       {marketplaces.map((m) => (
         <img
           src={m.logo}
-          alt={m.nome}
-          width="160"
-          height="56"
+          alt={`Logo ${m.nome}`}
+          width={m.w}
+          height={m.h}
           loading="lazy"
-          class="h-14 w-auto rounded-lg shadow-sm hover:shadow-md transition-shadow"
+          class="h-14 w-auto flex-shrink-0 rounded-xl shadow-sm hover:scale-105 transition-transform duration-200"
         />
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+</style>

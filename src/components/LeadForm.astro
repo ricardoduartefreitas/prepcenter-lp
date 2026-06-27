@@ -3,8 +3,11 @@
 // PUBLIC_TURNSTILE_SITE_KEY: configurar variável de ambiente no Cloudflare Pages
 // SUPABASE_URL: URL da Edge Function do Supabase rfaskndtdixdhpdwrydy
 const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "CONFIGURE_NO_CLOUDFLARE";
+const TURNSTILE_ATIVA = TURNSTILE_SITE_KEY !== "CONFIGURE_NO_CLOUDFLARE";
 const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submit-prepcenter-lead";
 ---
+{/* Carrega o script do Turnstile apenas quando a site key estiver configurada */}
+{TURNSTILE_ATIVA && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 <div id="lead-form-wrapper" class="bg-white rounded-2xl border border-[var(--color-border)] shadow-lg p-8">
   <form id="lead-form" novalidate>
     <div class="grid sm:grid-cols-2 gap-4 mb-4">
@@ -112,11 +115,22 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
     </div>
 
     <!-- Cloudflare Turnstile (só renderiza quando site key estiver configurada) -->
-    {TURNSTILE_SITE_KEY !== "CONFIGURE_NO_CLOUDFLARE" && (
-      <div class="mb-4">
-        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light"></div>
+    {TURNSTILE_ATIVA && (
+      <div id="turnstile-wrapper" class="mb-4">
+        <div
+          class="cf-turnstile"
+          data-sitekey={TURNSTILE_SITE_KEY}
+          data-theme="light"
+          data-error-callback="turnstileOnError"
+        ></div>
       </div>
     )}
+    <script is:inline>
+      window.turnstileOnError = function() {
+        var w = document.getElementById('turnstile-wrapper');
+        if (w) w.style.display = 'none';
+      };
+    </script>
 
     <!-- Erro -->
     <div id="lf-erro" class="hidden mb-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3"></div>
