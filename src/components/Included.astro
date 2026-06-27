@@ -1,0 +1,35 @@
+---
+// src/components/Included.astro
+const itens = [
+  { icon: "🏷️", title: "Armazenagem", desc: "Seu estoque guardado com segurança no nosso espaço." },
+  { icon: "🔍", title: "Separação (picking)", desc: "Identificamos e separamos cada item do pedido com precisão." },
+  { icon: "📦", title: "Embalagem completa", desc: "Material de qualidade, envelope ou caixa conforme o produto." },
+  { icon: "🧾", title: "Impressão da NF", desc: "Nota fiscal emitida e impressa aqui mesmo, sem depender de você." },
+  { icon: "🏷️", title: "Etiqueta da transportadora", desc: "Gerada e colada no pacote antes do despacho. Rastreio garantido." },
+  { icon: "🚚", title: "Bipagem e despacho", desc: "Ponto de coleta credenciado — pacote rastreado no sistema na hora." },
+];
+---
+<section class="py-16 md:py-24 bg-[var(--color-bg-alt)]">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-[var(--font-display)] font-bold text-[var(--color-text)] mb-4">
+        Tudo incluso em cada envio
+      </h2>
+      <p class="text-[var(--color-text-muted)] text-lg">
+        Sem surpresa no final do mês. Um preço, tudo resolvido.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {itens.map((item) => (
+        <div class="bg-white border border-[var(--color-border)] rounded-xl p-6 flex gap-4 items-start">
+          <span class="text-2xl flex-shrink-0">{item.icon}</span>
+          <div>
+            <h3 class="font-[var(--font-display)] font-semibold text-[var(--color-text)] mb-1">{item.title}</h3>
+            <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
