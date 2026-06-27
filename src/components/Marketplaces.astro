@@ -1,11 +1,12 @@
 ---
 // src/components/Marketplaces.astro
 const marketplaces = [
-  { nome: "TikTok Shop", cor: "#000000" },
-  { nome: "Shopee", cor: "#EE4D2D" },
-  { nome: "Shein", cor: "#000000" },
-  { nome: "AliExpress", cor: "#FF6A00" },
-  { nome: "Kwai", cor: "#FF6C2C" },
+  { nome: "TikTok Shop", logo: "/logos/tiktok-shop.svg" },
+  { nome: "Shopee",      logo: "/logos/shopee.svg" },
+  { nome: "Shein",       logo: "/logos/shein.svg" },
+  { nome: "AliExpress",  logo: "/logos/aliexpress.svg" },
+  { nome: "Kwai",        logo: "/logos/kwai.svg" },
+  { nome: "Temu",        logo: "/logos/temu.svg" },
 ];
 ---
 <section class="py-12 bg-[var(--color-bg)] border-y border-[var(--color-border)]">
@@ -15,9 +16,14 @@ const marketplaces = [
     </p>
     <div class="flex flex-wrap justify-center gap-4">
       {marketplaces.map((m) => (
-        <div class="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-lg px-6 py-3 font-[var(--font-display)] font-semibold text-[var(--color-text)]">
-          {m.nome}
-        </div>
+        <img
+          src={m.logo}
+          alt={m.nome}
+          width="160"
+          height="56"
+          loading="lazy"
+          class="h-14 w-auto rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        />
       ))}
     </div>
   </div>
