@@ -1,0 +1,48 @@
+---
+// src/components/Problem.astro
+const dores = [
+  {
+    icon: "📦",
+    title: "Embalar pedido por pedido",
+    desc: "Tempo que deveria estar em anúncios, atendimento e reposição de estoque.",
+  },
+  {
+    icon: "🖨️",
+    title: "Imprimir NF e etiqueta",
+    desc: "Processo manual que trava a operação e gera erro humano.",
+  },
+  {
+    icon: "🚗",
+    title: "Ir à transportadora todo dia",
+    desc: "Deslocamento, fila e custo oculto que ninguém precifica.",
+  },
+  {
+    icon: "📉",
+    title: "Perder ranking por atraso",
+    desc: "O marketplace penaliza quem não despacha no prazo. Reputação cai.",
+  },
+];
+---
+<section class="py-16 md:py-24 bg-[var(--color-bg)]">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-[var(--font-display)] font-bold text-[var(--color-text)] mb-4">
+        Quanto tempo você perde<br />com o que não é venda?
+      </h2>
+      <p class="text-[var(--color-text-muted)] text-lg max-w-2xl mx-auto">
+        Cada hora embalando, imprimindo etiqueta ou indo à transportadora
+        é uma hora a menos vendendo e crescendo.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {dores.map((dor) => (
+        <div class="bg-red-50 border border-red-100 rounded-xl p-6">
+          <div class="text-3xl mb-4">{dor.icon}</div>
+          <h3 class="font-[var(--font-display)] font-semibold text-[var(--color-text)] mb-2">{dor.title}</h3>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">{dor.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

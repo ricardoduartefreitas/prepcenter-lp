@@ -1,0 +1,57 @@
+---
+// src/components/HowItWorks.astro
+const passos = [
+  {
+    num: "01",
+    title: "Você envia seu estoque",
+    desc: "Traz até nós ou agenda coleta — seu produto fica armazenado com segurança aqui.",
+  },
+  {
+    num: "02",
+    title: "Pedido entra no marketplace",
+    desc: "Você vende normalmente na Shopee, TikTok Shop, ML e outras. Nada muda para você.",
+  },
+  {
+    num: "03",
+    title: "A gente separa e embala",
+    desc: "Picking, embalagem e proteção conforme o produto. Com cuidado, sempre.",
+  },
+  {
+    num: "04",
+    title: "NF + etiqueta impressos",
+    desc: "Tudo emitido aqui mesmo, sem depender de você ou da sua impressora.",
+  },
+  {
+    num: "05",
+    title: "Bipagem e despacho",
+    desc: "Somos ponto de coleta credenciado — bipamos e entregamos na hora. Rastreio atualizado.",
+  },
+];
+---
+<section class="py-16 md:py-24 bg-[var(--color-brand-blue)] text-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-[var(--font-display)] font-bold mb-4">
+        Como funciona
+      </h2>
+      <p class="text-blue-200 text-lg">Simples como deve ser.</p>
+    </div>
+
+    <div class="relative">
+      <!-- Linha conectora (desktop) -->
+      <div class="hidden md:block absolute top-8 left-[10%] right-[10%] h-0.5 bg-blue-500"></div>
+
+      <div class="grid sm:grid-cols-3 md:grid-cols-5 gap-8 relative">
+        {passos.map((passo) => (
+          <div class="text-center">
+            <div class="w-16 h-16 bg-[var(--color-brand-orange)] rounded-full flex items-center justify-center text-white font-[var(--font-display)] font-bold text-lg mx-auto mb-4 relative z-10">
+              {passo.num}
+            </div>
+            <h3 class="font-[var(--font-display)] font-semibold text-white mb-2 text-sm">{passo.title}</h3>
+            <p class="text-blue-200 text-xs leading-relaxed">{passo.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
