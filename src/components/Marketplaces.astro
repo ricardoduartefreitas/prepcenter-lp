@@ -1,0 +1,25 @@
+---
+// src/components/Marketplaces.astro
+const marketplaces = [
+  { nome: "Shopee", cor: "#EE4D2D" },
+  { nome: "TikTok Shop", cor: "#000000" },
+  { nome: "Mercado Livre", cor: "#FFE600" },
+  { nome: "Shein", cor: "#000000" },
+  { nome: "AliExpress", cor: "#FF6A00" },
+  { nome: "Kwai", cor: "#FF6C2C" },
+];
+---
+<section class="py-12 bg-[var(--color-bg)] border-y border-[var(--color-border)]">
+  <div class="max-w-5xl mx-auto px-4 text-center">
+    <p class="text-sm font-medium text-[var(--color-text-muted)] uppercase tracking-widest mb-8">
+      Atendemos todos os principais marketplaces
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      {marketplaces.map((m) => (
+        <div class="bg-[var(--color-bg-alt)] border border-[var(--color-border)] rounded-lg px-6 py-3 font-[var(--font-display)] font-semibold text-[var(--color-text)]">
+          {m.nome}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

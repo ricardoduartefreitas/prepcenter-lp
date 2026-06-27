@@ -1,0 +1,30 @@
+---
+// src/components/WhyRuah.astro
+const motivos = [
+  { num: "01", title: "Zero mensalidade", desc: "Você não paga para estar conosco. Paga apenas pelo que despachar — sem mínimo de volume inicial para começar." },
+  { num: "02", title: "Sem viagem para São Paulo", desc: "Único fulfillment do Centro-Oeste. Seu produto fica em Goiânia e sai daqui — sem frete de transferência até SP." },
+  { num: "03", title: "Ponto de coleta credenciado", desc: "Somos ponto oficial J&T, Jadlog e Anjun. Bipamos aqui mesmo — rastreio atualizado na hora, sem fila." },
+  { num: "04", title: "NF + etiqueta no pacote", desc: "Nada de depender de você imprimir. A gente emite, imprime e cola — o pacote sai pronto para despacho." },
+  { num: "05", title: "Estacionamento fácil", desc: "Rua 104, Setor Sul. Estacionamento gratuito na porta — sem estresse para trazer ou buscar estoque." },
+  { num: "06", title: "Você foca no que importa", desc: "Anúncios, atendimento, novos produtos. A logística fica com a gente. Simples assim." },
+];
+---
+<section class="py-16 md:py-24 bg-[var(--color-bg-alt)]">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl md:text-4xl font-[var(--font-display)] font-bold text-[var(--color-text)] mb-4">
+        Por que a Ruah faz sentido<br />para o seu negócio
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {motivos.map((m) => (
+        <div class="bg-white border border-[var(--color-border)] rounded-xl p-6">
+          <div class="text-[var(--color-brand-orange)] font-[var(--font-display)] font-bold text-3xl mb-3">{m.num}</div>
+          <h3 class="font-[var(--font-display)] font-semibold text-[var(--color-text)] text-lg mb-2">{m.title}</h3>
+          <p class="text-sm text-[var(--color-text-muted)] leading-relaxed">{m.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

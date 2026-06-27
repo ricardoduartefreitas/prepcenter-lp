@@ -1,0 +1,40 @@
+---
+// src/components/Testimonials.astro
+// PLACEHOLDER — substituir pelos depoimentos reais quando houver 2+ cases
+const depoimentos = [
+  {
+    texto: "Depoimento real a ser adicionado após os primeiros 30 dias de operação.",
+    cliente: "Nome do Seller",
+    marketplace: "Shopee · Goiânia-GO",
+    avatar: null,
+  },
+  {
+    texto: "Depoimento real a ser adicionado após os primeiros 30 dias de operação.",
+    cliente: "Nome do Seller",
+    marketplace: "TikTok Shop · Goiânia-GO",
+    avatar: null,
+  },
+];
+---
+<!-- Seção oculta até ter depoimentos reais -->
+<!-- Para ativar: remover a classe hidden do elemento abaixo e popular os dados -->
+<section class="hidden py-16 md:py-24 bg-[var(--color-bg-alt)]">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="text-center mb-14">
+      <h2 class="text-3xl font-[var(--font-display)] font-bold text-[var(--color-text)] mb-4">
+        Resultados reais de quem já usa
+      </h2>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+      {depoimentos.map((d) => (
+        <div class="bg-white border border-[var(--color-border)] rounded-xl p-6">
+          <p class="text-[var(--color-text)] italic mb-4">"{d.texto}"</p>
+          <div>
+            <p class="font-[var(--font-display)] font-semibold text-[var(--color-text)]">{d.cliente}</p>
+            <p class="text-sm text-[var(--color-text-muted)]">{d.marketplace}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
