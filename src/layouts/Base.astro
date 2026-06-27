@@ -117,6 +117,9 @@ const schemaOrg = {
 
   <!-- Cloudflare Turnstile -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <!-- Custom head content (for pages that need extra meta tags, etc) -->
+  <slot name="head" />
 </head>
 <body>
   <main>
