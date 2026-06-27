@@ -1,0 +1,56 @@
+---
+// src/components/Hero.astro
+import { Image } from 'astro:assets';
+import heroImg from '../assets/images/hero.jpg';
+---
+<section class="relative bg-[var(--color-bg-alt)] overflow-hidden">
+  <div class="max-w-6xl mx-auto px-4 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+
+    <!-- Texto -->
+    <div>
+      <div class="inline-flex items-center gap-2 bg-orange-50 border border-orange-200 text-orange-700 text-sm font-medium px-3 py-1 rounded-full mb-6">
+        <span>✦</span>
+        <span>Fulfillment em Goiânia · Pague só por envio</span>
+      </div>
+
+      <h1 class="text-4xl md:text-5xl font-[var(--font-display)] font-bold text-[var(--color-text)] mb-6 leading-tight">
+        Você vende.<br />
+        <span class="text-[var(--color-brand-orange)]">A Ruah cuida</span><br />
+        do resto.
+      </h1>
+
+      <p class="text-lg text-[var(--color-text-muted)] mb-8 leading-relaxed">
+        Estoque, embalagem, nota fiscal, etiqueta e envio —
+        tudo resolvido no Setor Sul, Goiânia.
+        Sem mensalidade. Pague só pelo que despachar.
+      </p>
+
+      <div class="flex flex-wrap gap-3 mb-8 text-sm text-[var(--color-text-muted)]">
+        <span class="flex items-center gap-1"><span class="text-[var(--color-success)]">✓</span> Sem mensalidade</span>
+        <span class="flex items-center gap-1"><span class="text-[var(--color-success)]">✓</span> NF + etiqueta inclusos</span>
+        <span class="flex items-center gap-1"><span class="text-[var(--color-success)]">✓</span> J&amp;T · Jadlog · Anjun</span>
+        <span class="flex items-center gap-1"><span class="text-[var(--color-success)]">✓</span> Ponto de coleta credenciado</span>
+      </div>
+
+      <a
+        href="#contato"
+        class="inline-block bg-[var(--color-brand-orange)] hover:bg-orange-600 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
+      >
+        Quero começar agora
+      </a>
+    </div>
+
+    <!-- Imagem -->
+    <div class="relative">
+      <Image
+        src={heroImg}
+        alt="Equipe do Prep Center Ruah separando e embalando pedidos para sellers em Goiânia"
+        width={600}
+        height={500}
+        fetchpriority="high"
+        loading="eager"
+        class="rounded-2xl shadow-xl w-full object-cover"
+      />
+    </div>
+  </div>
+</section>
