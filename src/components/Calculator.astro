@@ -1,0 +1,89 @@
+---
+// src/components/Calculator.astro
+// A calculadora usa JS inline — sem dependências externas
+---
+<section class="py-16 md:py-24 bg-[var(--color-brand-orange)]">
+  <div class="max-w-3xl mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl md:text-4xl font-[var(--font-display)] font-bold text-white mb-4">
+        Quanto você economiza na prática?
+      </h2>
+      <p class="text-orange-100 text-lg">Simule o custo do seu volume atual.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl p-8 shadow-xl">
+      <div class="grid sm:grid-cols-2 gap-6 mb-6">
+        <div>
+          <label for="calc-volume" class="block text-sm font-medium text-[var(--color-text)] mb-2">
+            Pedidos por dia
+          </label>
+          <input
+            id="calc-volume"
+            type="number"
+            min="1"
+            max="9999"
+            value="30"
+            class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-lg font-[var(--font-display)] font-bold text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+          />
+        </div>
+
+        <div>
+          <label for="calc-tipo" class="block text-sm font-medium text-[var(--color-text)] mb-2">
+            Tipo de embalagem principal
+          </label>
+          <select
+            id="calc-tipo"
+            class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+          >
+            <option value="4.50">Envelope — R$4,50/envio</option>
+            <option value="6.50" selected>Caixa P — R$6,50/envio</option>
+            <option value="9.50">Caixa M — R$9,50/envio</option>
+            <option value="14.00">Caixa G — R$14,00/envio</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="bg-[var(--color-bg-alt)] rounded-xl p-6 grid sm:grid-cols-3 gap-4 text-center">
+        <div>
+          <p class="text-sm text-[var(--color-text-muted)] mb-1">Custo por dia</p>
+          <p id="calc-dia" class="text-2xl font-[var(--font-display)] font-bold text-[var(--color-text)]">R$195,00</p>
+        </div>
+        <div>
+          <p class="text-sm text-[var(--color-text-muted)] mb-1">Custo mensal</p>
+          <p id="calc-mes" class="text-2xl font-[var(--font-display)] font-bold text-[var(--color-brand-orange)]">R$4.290,00</p>
+        </div>
+        <div>
+          <p class="text-sm text-[var(--color-text-muted)] mb-1">Horas liberadas/mês</p>
+          <p id="calc-horas" class="text-2xl font-[var(--font-display)] font-bold text-[var(--color-success)]">~44h</p>
+        </div>
+      </div>
+
+      <p class="text-xs text-center text-[var(--color-text-muted)] mt-4">
+        * Frete da transportadora não incluso — cobrado pelo valor real de tabela.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function calcular() {
+    const volume = parseInt((document.getElementById('calc-volume') as HTMLInputElement).value) || 0;
+    const preco = parseFloat((document.getElementById('calc-tipo') as HTMLSelectElement).value) || 0;
+    const diasMes = 22; // dias úteis
+    const minsPorPedido = 4; // estimativa: 4 min embalando + indo à transportadora
+
+    const custoDia = volume * preco;
+    const custoMes = custoDia * diasMes;
+    const horasLiberadas = Math.round((volume * minsPorPedido * diasMes) / 60);
+
+    const fmt = (v: number) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    document.getElementById('calc-dia')!.textContent = fmt(custoDia);
+    document.getElementById('calc-mes')!.textContent = fmt(custoMes);
+    document.getElementById('calc-horas')!.textContent = `~${horasLiberadas}h`;
+  }
+
+  document.getElementById('calc-volume')?.addEventListener('input', calcular);
+  document.getElementById('calc-tipo')?.addEventListener('change', calcular);
+  calcular();
+</script>
