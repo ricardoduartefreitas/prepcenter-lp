@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://prepcenter.ruahtecnologia.com.br/sitemap-index.xml

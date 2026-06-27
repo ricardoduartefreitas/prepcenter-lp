@@ -1,0 +1,127 @@
+---
+// src/layouts/Base.astro
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+}
+
+const {
+  title = "Prep Center Goiânia — Fulfillment para Sellers | Ruah Tecnologia",
+  description = "Fulfillment completo para sellers de Shopee, TikTok Shop e Mercado Livre em Goiânia. Embalagem, NF, etiqueta e despacho. Pague só pelo que enviar.",
+  canonical = "https://prepcenter.ruahtecnologia.com.br/",
+  ogImage = "https://prepcenter.ruahtecnologia.com.br/favicon.png",
+} = Astro.props;
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "MovingCompany"],
+      "name": "Ruah Prep Center",
+      "description": "Fulfillment e prep center em Goiânia para sellers de Shopee, TikTok Shop e Mercado Livre",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Rua 104, nº 415, Setor Sul",
+        "postalCode": "74083-300",
+        "addressLocality": "Goiânia",
+        "addressRegion": "GO",
+        "addressCountry": "BR"
+      },
+      "telephone": "+55-62-98136-6800",
+      "email": "atendimento@ruahvendaonline.com.br",
+      "url": "https://prepcenter.ruahtecnologia.com.br",
+      "openingHours": ["Mo-Fr 08:30-17:30", "Sa 08:30-12:30"]
+    },
+    {
+      "@type": "Service",
+      "name": "Fulfillment para Sellers",
+      "provider": { "@type": "LocalBusiness", "name": "Ruah Prep Center" },
+      "areaServed": { "@type": "City", "name": "Goiânia" },
+      "description": "Serviço completo de fulfillment: armazenagem, embalagem, emissão de NF, etiquetagem e despacho via J&T, Jadlog e Anjun"
+    }
+  ]
+};
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="pt_BR" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Schema.org -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+
+  <!-- Fonts: Syne + DM Sans via preload, display=optional (nunca swap) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=optional"
+    onload="this.rel='stylesheet'"
+    crossorigin
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=optional"
+    />
+  </noscript>
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '804688169395874');
+    fbq('track', 'PageView');
+    fbq('track', 'ViewContent', { content_name: 'prep_center_lp' });
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none" alt=""
+      src="https://www.facebook.com/tr?id=804688169395874&ev=PageView&noscript=1" />
+  </noscript>
+
+  <!-- GA4 — substituir G-XXXXXXXXXX pelo ID real após criar propriedade -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
+  <!-- Cloudflare Turnstile -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <main>
+    <slot />
+  </main>
+  <slot name="floating" />
+</body>
+</html>
