@@ -67,15 +67,32 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
           class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
         >
           <option value="">Selecione...</option>
-          <option value="Shopee">Shopee</option>
           <option value="TikTok Shop">TikTok Shop</option>
-          <option value="Mercado Livre">Mercado Livre</option>
+          <option value="Shopee">Shopee</option>
           <option value="Shein">Shein</option>
           <option value="AliExpress">AliExpress</option>
           <option value="Kwai">Kwai</option>
           <option value="Outro">Outro</option>
         </select>
       </div>
+    </div>
+
+    <div class="mb-4">
+      <label for="lf-skus" class="block text-sm font-medium text-[var(--color-text)] mb-1">
+        Quantos produtos diferentes (SKUs) você vende? *
+      </label>
+      <select
+        id="lf-skus"
+        name="skus"
+        required
+        class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+      >
+        <option value="">Selecione...</option>
+        <option value="1-5">Até 5 produtos</option>
+        <option value="6-20">6 a 20 produtos</option>
+        <option value="21-50">21 a 50 produtos</option>
+        <option value=">50">Mais de 50 produtos</option>
+      </select>
     </div>
 
     <!-- Checkbox LGPD -->
@@ -161,10 +178,11 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
     const wa = document.getElementById('lf-wa').value.trim();
     const volume = document.getElementById('lf-volume').value;
     const marketplace = document.getElementById('lf-marketplace').value;
+    const skus = document.getElementById('lf-skus').value;
     const lgpd = document.getElementById('lf-lgpd').checked;
     const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value ?? '';
 
-    if (!nome || !wa || !volume || !marketplace) {
+    if (!nome || !wa || !volume || !marketplace || !skus) {
       mostrarErro('Por favor, preencha todos os campos obrigatórios.');
       return;
     }
@@ -189,6 +207,7 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
           whatsapp: wa,
           volume,
           marketplace,
+          skus,
           turnstile_token: turnstileToken,
           lgpd_consent: true,
           ...getUTMs(),
