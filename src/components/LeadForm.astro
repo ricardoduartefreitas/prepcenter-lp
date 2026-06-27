@@ -1,0 +1,221 @@
+---
+// src/components/LeadForm.astro
+// PUBLIC_TURNSTILE_SITE_KEY: configurar variável de ambiente no Cloudflare Pages
+// SUPABASE_URL: URL da Edge Function do Supabase rfaskndtdixdhpdwrydy
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? "1x00000000000000000000AA";
+const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submit-prepcenter-lead";
+---
+<div id="lead-form-wrapper" class="bg-white rounded-2xl border border-[var(--color-border)] shadow-lg p-8">
+  <form id="lead-form" novalidate>
+    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label for="lf-nome" class="block text-sm font-medium text-[var(--color-text)] mb-1">
+          Seu nome *
+        </label>
+        <input
+          id="lf-nome"
+          name="nome"
+          type="text"
+          required
+          autocomplete="name"
+          placeholder="João Silva"
+          class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+        />
+      </div>
+      <div>
+        <label for="lf-wa" class="block text-sm font-medium text-[var(--color-text)] mb-1">
+          WhatsApp *
+        </label>
+        <input
+          id="lf-wa"
+          name="whatsapp"
+          type="tel"
+          required
+          autocomplete="tel"
+          placeholder="(62) 99999-9999"
+          class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+        />
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label for="lf-volume" class="block text-sm font-medium text-[var(--color-text)] mb-1">
+          Volume médio por dia *
+        </label>
+        <select
+          id="lf-volume"
+          name="volume"
+          required
+          class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+        >
+          <option value="">Selecione...</option>
+          <option value="<10">Menos de 10 pedidos/dia</option>
+          <option value="10-30">10 a 30 pedidos/dia</option>
+          <option value="30-100">30 a 100 pedidos/dia</option>
+          <option value=">100">Mais de 100 pedidos/dia</option>
+        </select>
+      </div>
+      <div>
+        <label for="lf-marketplace" class="block text-sm font-medium text-[var(--color-text)] mb-1">
+          Marketplace principal *
+        </label>
+        <select
+          id="lf-marketplace"
+          name="marketplace"
+          required
+          class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
+        >
+          <option value="">Selecione...</option>
+          <option value="Shopee">Shopee</option>
+          <option value="TikTok Shop">TikTok Shop</option>
+          <option value="Mercado Livre">Mercado Livre</option>
+          <option value="Shein">Shein</option>
+          <option value="AliExpress">AliExpress</option>
+          <option value="Kwai">Kwai</option>
+          <option value="Outro">Outro</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Checkbox LGPD -->
+    <div class="flex items-start gap-3 mb-4">
+      <input
+        id="lf-lgpd"
+        name="lgpd"
+        type="checkbox"
+        required
+        class="mt-1 h-4 w-4 accent-[var(--color-brand-orange)]"
+      />
+      <label for="lf-lgpd" class="text-xs text-[var(--color-text-muted)] leading-relaxed">
+        Autorizo receber mensagens automáticas via WhatsApp da Ruah Tecnologia sobre o serviço de fulfillment.
+        Consulte nossa <a href="/privacidade" class="underline text-[var(--color-brand-blue)]" rel="noopener noreferrer">Política de Privacidade</a>.
+      </label>
+    </div>
+
+    <!-- Cloudflare Turnstile -->
+    <div class="mb-4">
+      <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light"></div>
+    </div>
+
+    <!-- Erro -->
+    <div id="lf-erro" class="hidden mb-4 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3"></div>
+
+    <button
+      type="submit"
+      id="lf-btn"
+      class="w-full bg-[var(--color-brand-orange)] hover:bg-orange-600 disabled:opacity-60 text-white font-[var(--font-display)] font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
+    >
+      Quero começar agora →
+    </button>
+  </form>
+
+  <!-- Sucesso -->
+  <div id="lf-sucesso" class="hidden text-center py-8">
+    <div class="text-4xl mb-4">✅</div>
+    <h3 class="font-[var(--font-display)] font-bold text-xl text-[var(--color-text)] mb-2">
+      Recebemos seu contato!
+    </h3>
+    <p class="text-[var(--color-text-muted)] mb-6">
+      A Ester vai te chamar no WhatsApp em alguns minutos.
+      Se preferir falar agora:
+    </p>
+    <a
+      href="https://wa.me/5562981366800?text=Ol%C3%A1%2C+acabei+de+preencher+o+formul%C3%A1rio+do+Prep+Center+e+quero+saber+mais"
+      class="inline-block bg-[#25D366] hover:bg-green-600 text-white font-semibold px-6 py-3 rounded-lg"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Falar agora no WhatsApp
+    </a>
+  </div>
+</div>
+
+<script define:vars={{ EDGE_FN_URL }}>
+  const form = document.getElementById('lead-form');
+  const btn = document.getElementById('lf-btn');
+  const erroEl = document.getElementById('lf-erro');
+  const sucessoEl = document.getElementById('lf-sucesso');
+
+  function getUTMs() {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      utm_source: p.get('utm_source') ?? '',
+      utm_medium: p.get('utm_medium') ?? '',
+      utm_campaign: p.get('utm_campaign') ?? '',
+      utm_content: p.get('utm_content') ?? '',
+      utm_term: p.get('utm_term') ?? '',
+    };
+  }
+
+  function mostrarErro(msg) {
+    erroEl.textContent = msg;
+    erroEl.classList.remove('hidden');
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    erroEl.classList.add('hidden');
+
+    const nome = document.getElementById('lf-nome').value.trim();
+    const wa = document.getElementById('lf-wa').value.trim();
+    const volume = document.getElementById('lf-volume').value;
+    const marketplace = document.getElementById('lf-marketplace').value;
+    const lgpd = document.getElementById('lf-lgpd').checked;
+    const turnstileToken = document.querySelector('[name="cf-turnstile-response"]')?.value ?? '';
+
+    if (!nome || !wa || !volume || !marketplace) {
+      mostrarErro('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+    if (!lgpd) {
+      mostrarErro('É necessário aceitar os termos para continuar.');
+      return;
+    }
+    if (!turnstileToken) {
+      mostrarErro('Complete a verificação de segurança.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    try {
+      const res = await fetch(EDGE_FN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome,
+          whatsapp: wa,
+          volume,
+          marketplace,
+          turnstile_token: turnstileToken,
+          ...getUTMs(),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.error ?? 'Erro ao enviar');
+      }
+
+      // Pixel: Lead
+      if (window.fbq) {
+        fbq('track', 'Lead', { content_name: 'prepcenter', volume, marketplace });
+      }
+      // GA4
+      if (window.gtag) {
+        gtag('event', 'generate_lead', { volume, marketplace });
+      }
+
+      form.classList.add('hidden');
+      sucessoEl.classList.remove('hidden');
+
+    } catch (err) {
+      mostrarErro('Ops! Tivemos um problema. Tente novamente ou nos chame no WhatsApp.');
+      btn.disabled = false;
+      btn.textContent = 'Quero começar agora →';
+    }
+  });
+</script>

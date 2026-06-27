@@ -1,0 +1,48 @@
+---
+// src/components/Footer.astro
+const ano = new Date().getFullYear();
+---
+<footer class="bg-[var(--color-text)] text-white py-12">
+  <div class="max-w-6xl mx-auto px-4 grid sm:grid-cols-3 gap-8 mb-8">
+    <div>
+      <p class="font-[var(--font-display)] font-bold text-lg mb-3">Ruah Prep Center</p>
+      <p class="text-sm text-gray-400 leading-relaxed">
+        Fulfillment completo para sellers de<br />Shopee, TikTok Shop e Mercado Livre<br />em Goiânia, GO.
+      </p>
+    </div>
+    <div>
+      <p class="font-semibold mb-3 text-sm uppercase tracking-wider text-gray-400">Localização</p>
+      <address class="not-italic text-sm text-gray-300 leading-relaxed">
+        Rua 104, nº 415, Setor Sul<br />
+        Goiânia — GO, CEP 74083-300<br />
+        Seg–Sex 08:30–17:30 | Sáb 08:30–12:30
+      </address>
+    </div>
+    <div>
+      <p class="font-semibold mb-3 text-sm uppercase tracking-wider text-gray-400">Contato</p>
+      <a
+        href="https://wa.me/5562981366800"
+        class="text-sm text-gray-300 hover:text-white block mb-2"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        (62) 98136-6800
+      </a>
+      <a
+        href="mailto:atendimento@ruahvendaonline.com.br"
+        class="text-sm text-gray-300 hover:text-white block"
+      >
+        atendimento@ruahvendaonline.com.br
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-gray-700 pt-6 max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+    <p class="text-xs text-gray-500">
+      © {ano} Ruah Tecnologia. Todos os direitos reservados.
+    </p>
+    <a href="/privacidade" class="text-xs text-gray-500 hover:text-gray-300 underline">
+      Política de Privacidade
+    </a>
+  </div>
+</footer>

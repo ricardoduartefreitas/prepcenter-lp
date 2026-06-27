@@ -1,5 +1,4 @@
 ---
-// src/pages/index.astro
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Problem from '../components/Problem.astro';
@@ -7,9 +6,12 @@ import HowItWorks from '../components/HowItWorks.astro';
 import Included from '../components/Included.astro';
 import Pricing from '../components/Pricing.astro';
 import WhyRuah from '../components/WhyRuah.astro';
-import Calculator from '../components/Calculator.astro';
 import Marketplaces from '../components/Marketplaces.astro';
+import Calculator from '../components/Calculator.astro';
 import Testimonials from '../components/Testimonials.astro';
+import CtaFinal from '../components/CtaFinal.astro';
+import Footer from '../components/Footer.astro';
+import FloatingWA from '../components/FloatingWA.astro';
 ---
 <Base>
   <Hero />
@@ -18,7 +20,10 @@ import Testimonials from '../components/Testimonials.astro';
   <Included />
   <Pricing />
   <WhyRuah />
-  <Calculator />
   <Marketplaces />
+  <Calculator />
   <Testimonials />
+  <CtaFinal />
+  <Footer />
+  <FloatingWA slot="floating" />
 </Base>
