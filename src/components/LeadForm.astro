@@ -41,7 +41,7 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
       </div>
     </div>
 
-    <div class="grid sm:grid-cols-2 gap-4 mb-4">
+    <div class="grid sm:grid-cols-2 gap-4 mb-4 items-start">
       <div>
         <label for="lf-volume" class="block text-sm font-medium text-[var(--color-text)] mb-1">
           Volume médio por dia *
@@ -59,25 +59,24 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
           <option value=">100">Mais de 100 pedidos/dia</option>
         </select>
       </div>
-      <div>
-        <label for="lf-marketplace" class="block text-sm font-medium text-[var(--color-text)] mb-1">
-          Marketplace principal *
-        </label>
-        <select
-          id="lf-marketplace"
-          name="marketplace"
-          required
-          class="w-full border border-[var(--color-border)] rounded-lg px-4 py-3 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-orange)]"
-        >
-          <option value="">Selecione...</option>
-          <option value="TikTok Shop">TikTok Shop</option>
-          <option value="Shopee">Shopee</option>
-          <option value="Shein">Shein</option>
-          <option value="AliExpress">AliExpress</option>
-          <option value="Kwai">Kwai</option>
-          <option value="Temu">Temu</option>
-          <option value="Outro">Outro</option>
-        </select>
+      <div class="sm:col-span-2">
+        <span class="block text-sm font-medium text-[var(--color-text)] mb-2">
+          Onde você vende? * <span class="text-xs text-[var(--color-text-muted)] font-normal">(selecione todos)</span>
+        </span>
+        <div id="lf-marketplace-group" class="grid grid-cols-3 gap-2">
+          {['TikTok Shop','Shopee','Shein','AliExpress','Kwai','Temu','Mercado Livre','Amazon','Outro'].map((m) => (
+            <label class="flex items-center gap-2 text-sm text-[var(--color-text)] cursor-pointer select-none">
+              <input
+                type="checkbox"
+                name="marketplace"
+                value={m}
+                class="h-4 w-4 accent-[var(--color-brand-orange)]"
+              />
+              {m}
+            </label>
+          ))}
+        </div>
+        <p id="lf-marketplace-erro" class="hidden text-xs text-red-600 mt-1">Selecione ao menos um marketplace.</p>
       </div>
     </div>
 
@@ -199,15 +198,22 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
     const nome = document.getElementById('lf-nome').value.trim();
     const wa = document.getElementById('lf-wa').value.trim();
     const volume = document.getElementById('lf-volume').value;
-    const marketplace = document.getElementById('lf-marketplace').value;
+    const marketplaceChecks = Array.from(document.querySelectorAll('[name="marketplace"]:checked')).map((el) => el.value);
     const skus = document.getElementById('lf-skus').value;
     const lgpd = document.getElementById('lf-lgpd').checked;
     const turnstileEl = document.querySelector('[name="cf-turnstile-response"]');
     const turnstileToken = turnstileEl?.value ?? '';
     const turnstileAtiva = !!document.querySelector('.cf-turnstile');
 
-    if (!nome || !wa || !volume || !marketplace || !skus) {
+    const mktErro = document.getElementById('lf-marketplace-erro');
+    if (mktErro) mktErro.classList.add('hidden');
+
+    if (!nome || !wa || !volume || !skus) {
       mostrarErro('Por favor, preencha todos os campos obrigatórios.');
+      return;
+    }
+    if (marketplaceChecks.length === 0) {
+      if (mktErro) mktErro.classList.remove('hidden');
       return;
     }
     if (!lgpd) {
@@ -230,7 +236,7 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
           nome,
           whatsapp: wa,
           volume,
-          marketplace,
+          marketplace: marketplaceChecks,
           skus,
           turnstile_token: turnstileToken,
           lgpd_consent: true,
@@ -246,17 +252,18 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
 
       // Pixel: Lead
       if (window.fbq) {
-        fbq('track', 'Lead', { content_name: 'prepcenter', volume, marketplace });
+        fbq('track', 'Lead', { content_name: 'prepcenter', volume, marketplace: marketplaceChecks.join(',') });
       }
       // GA4
       if (window.gtag) {
-        gtag('event', 'generate_lead', { volume, marketplace });
+        gtag('event', 'generate_lead', { volume, marketplace: marketplaceChecks.join(',') });
       }
 
       // Atualiza link do WA com contexto do lead
       const waBtn = document.getElementById('lf-wa-btn');
       if (waBtn) {
-        const msg = `Olá, preenchi o formulário do Prep Center. Vendo no ${marketplace}, despacho ${volume} pedidos/dia e tenho ${skus} SKUs. Quero saber mais sobre o serviço.`;
+        const mktStr = marketplaceChecks.join(', ');
+        const msg = `Olá! Preenchi o formulário do Prep Center.\nVendo em: ${mktStr}\nVolume: ${volume}\nProdutos: ${skus} SKUs\nQuero entender como o serviço funciona.`;
         waBtn.href = `https://wa.me/5562981366800?text=${encodeURIComponent(msg)}`;
       }
 
