@@ -158,7 +158,8 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
       A conversa começa quando você enviar a mensagem.
     </p>
     <a
-      href="https://wa.me/5562981366800?text=Ol%C3%A1%2C+acabei+de+preencher+o+formul%C3%A1rio+do+Prep+Center+e+quero+saber+mais"
+      id="lf-wa-btn"
+      href="https://wa.me/5562981366800?text=Ol%C3%A1%2C+preenchi+o+formul%C3%A1rio+do+Prep+Center+e+quero+saber+mais"
       class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-green-600 text-white font-semibold px-8 py-4 rounded-lg text-lg transition-colors"
       rel="noopener noreferrer"
       target="_blank"
@@ -250,6 +251,13 @@ const EDGE_FN_URL = "https://rfaskndtdixdhpdwrydy.supabase.co/functions/v1/submi
       // GA4
       if (window.gtag) {
         gtag('event', 'generate_lead', { volume, marketplace });
+      }
+
+      // Atualiza link do WA com contexto do lead
+      const waBtn = document.getElementById('lf-wa-btn');
+      if (waBtn) {
+        const msg = `Olá, preenchi o formulário do Prep Center. Vendo no ${marketplace}, despacho ${volume} pedidos/dia e tenho ${skus} SKUs. Quero saber mais sobre o serviço.`;
+        waBtn.href = `https://wa.me/5562981366800?text=${encodeURIComponent(msg)}`;
       }
 
       form.classList.add('hidden');
