@@ -24,7 +24,22 @@ Deno.serve(async (req) => {
     });
   }
 
-  let body: Record<string, string | boolean>;
+  interface LeadPayload {
+    nome: string;
+    whatsapp: string;
+    volume: string;
+    marketplace: string[];
+    skus?: string;
+    turnstile_token?: string;
+    lgpd_consent?: boolean | string;
+    utm_source?: string;
+    utm_medium?: string;
+    utm_campaign?: string;
+    utm_content?: string;
+    utm_term?: string;
+  }
+
+  let body: LeadPayload;
   try {
     body = await req.json();
   } catch {
@@ -39,6 +54,7 @@ Deno.serve(async (req) => {
     whatsapp,
     volume,
     marketplace,
+    skus,
     turnstile_token,
     lgpd_consent,
     utm_source,
@@ -46,9 +62,11 @@ Deno.serve(async (req) => {
     utm_campaign,
     utm_content,
     utm_term,
-  } = body as Record<string, string>;
+  } = body;
 
-  if (!nome?.trim() || !whatsapp?.trim() || !volume || !marketplace) {
+  const marketplaceArr = Array.isArray(marketplace) ? marketplace : (marketplace ? [marketplace as unknown as string] : []);
+
+  if (!nome?.trim() || !whatsapp?.trim() || !volume || marketplaceArr.length === 0) {
     return new Response(JSON.stringify({ error: 'Campos obrigatórios ausentes' }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -79,10 +97,11 @@ Deno.serve(async (req) => {
   const { data: lead, error: dbError } = await supabase
     .from('prepcenter_leads')
     .insert({
-      nome: (nome as string).trim(),
-      whatsapp: (whatsapp as string).trim(),
+      nome: nome.trim(),
+      whatsapp: whatsapp.trim(),
       volume,
-      marketplace,
+      marketplace: marketplaceArr,
+      skus: skus ?? null,
       lgpd_consent: lgpd_consent === true || lgpd_consent === 'true',
       turnstile_validated: true,
       utm_source: utm_source ?? null,
@@ -108,7 +127,7 @@ Deno.serve(async (req) => {
     fetch(N8N_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ leadId, nome, whatsapp, volume, marketplace }),
+      body: JSON.stringify({ leadId, nome, whatsapp, volume, marketplace: marketplaceArr, skus: skus ?? null }),
     })
       .then(async (r) => {
         if (r.ok) {
